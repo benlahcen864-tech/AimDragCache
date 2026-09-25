@@ -1,0 +1,21 @@
+using UnityEngine;
+
+namespace AimDragCache
+{
+    public class AimDragController : MonoBehaviour
+    {
+        public HitboxManager hitboxManager;
+        public HitboxTargetPredictor targetPredictor;
+        public float dragSmoothness = 8.0f;
+        public bool isAimLockActive = true;
+
+        void Update()
+        {
+            if (isAimLockActive && targetPredictor != null)
+            {
+                Vector3 targetCenter = targetPredictor.GetPredictedCenter(Time.deltaTime);
+                transform.position = Vector3.Lerp(transform.position, targetCenter, Time.deltaTime * dragSmoothness);
+            }
+        }
+    }
+}
