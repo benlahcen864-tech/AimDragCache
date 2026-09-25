@@ -1,0 +1,24 @@
+using UnityEngine;
+
+public class AimDragCacheSetup : MonoBehaviour
+{
+    void Start()
+    {
+        // 1. تطبيق بيانات التحويل (Transform)
+        transform.localPosition = new Vector3(-0.143704757f, -0.010202114f, -0.00000006f);
+        transform.localRotation = new Quaternion(6.180791e-14f, 3.991768e-07f, -0.1439201f, 0.9895893f);
+        transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+        // 2. تطبيق بيانات تصادم الكبسولة (Capsule Collider)
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        if (collider == null)
+        {
+            collider = gameObject.AddComponent<CapsuleCollider>();
+        }
+
+        collider.radius = 0.09954345f;
+        collider.height = 0.13665545f;
+        collider.direction = 0; // الاتجاه على المحور X
+        collider.center = new Vector3(0.12103459f, 0.02009277f, -0.00047457777f);
+    }
+}
