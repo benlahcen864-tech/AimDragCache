@@ -1,0 +1,40 @@
+using System;
+using System.IO;
+using UnityEngine;
+
+namespace AimDragCache
+{
+    public class HitboxManager : MonoBehaviour
+    {
+        public string configFileName = "HitboxConfig.json";
+
+        void Start()
+        {
+            string path = Path.Combine(Application.dataPath, configFileName);
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                HitboxRoot data = JsonUtility.FromJson<HitboxRoot>(json);
+                if (data != null && data.hitbox != null)
+                {
+                    ApplyHitbox(data.hitbox);
+                }
+            }
+        }
+
+        private void ApplyHitbox(HitboxConfig config)
+        {
+            CapsuleCollider collider = gameObject.GetComponent<CapsuleCollider>();
+            if (collider == null) collider = gameObject.AddComponent<CapsuleCollider>();
+
+            collider.radius = config.collider.radius;
+            collider.height = config.collider.height;
+            collider.direction = config.collider.direction;
+            collider.center = new Vector3(config.collider.center.x, config.collider.center.y, config.collider.center.z);
+
+            transform.localPosition = new Vector3(config.transform.position.x, config.transform.position.y, config.transform.position.z);
+            transform.localEulerAngles = new Vector3(config.transform.rotation.x, config.transform.rotation.y, config.transform.rotation.z);
+            transform.localScale = new Vector3(config.transform.scale.x, config.transform.scale.y, config.transform.scale.z);
+        }
+    }
+}
