@@ -1,5 +1,32 @@
 using UnityEngine;
 
+namespace AimDragCache
+{
+    [RequireComponent(typeof(HitboxManager))]
+    [RequireComponent(typeof(HitboxTargetPredictor))]
+    [RequireComponent(typeof(AimDragController))]
+    [RequireComponent(typeof(AimDragCacheManager))]
+    [RequireComponent(typeof(AimDragCacheOverlay))]
+    public class AimDragSystemInitializer : MonoBehaviour
+    {
+        void Awake()
+        {
+            var manager = GetComponent<HitboxManager>();
+            var predictor = GetComponent<HitboxTargetPredictor>();
+            var controller = GetComponent<AimDragController>();
+            var cache = GetComponent<AimDragCacheManager>();
+            var overlay = GetComponent<AimDragCacheOverlay>();
+
+            controller.hitboxManager = manager;
+            controller.targetPredictor = predictor;
+            overlay.cacheManager = cache;
+
+            Debug.Log("[+] AimDragCache System Fully Initialized and Connected.");
+        }
+    }
+}
+using UnityEngine;
+
 public class AimDragCacheSetup : MonoBehaviour
 {
     void Start()
